@@ -134,7 +134,7 @@ export const Route = createFileRoute("/locations/$city")({
 });
 
 function CityPage() {
-  const { city } = Route.useLoaderData();
+  const { city } = Route.useLoaderData() as { city: (typeof data)[string] };
   return (
     <>
       <section className="section-pad">
