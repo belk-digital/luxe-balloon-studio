@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Logo } from "./Logo";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -24,30 +25,30 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-luxe ${
-        scrolled
-          ? "bg-background/85 backdrop-blur-xl border-b border-border/60"
-          : "bg-transparent"
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 border-b ${
+        scrolled 
+          ? "bg-background/90 backdrop-blur-xl border-border/10 py-3 shadow-luxe" 
+          : "bg-transparent border-transparent py-5"
       }`}
     >
-      <div className="container-luxe flex items-center justify-between h-20">
-        <Link to="/" className="flex items-center gap-2 group">
-          <span className="font-display text-2xl tracking-tight text-foreground">
-            The Balloon <span className="text-gradient-gold italic">Gal</span>
-          </span>
-        </Link>
+      <div className={`container-luxe flex items-center justify-between transition-colors duration-500 ${scrolled ? "text-ink" : "text-background"}`}>
+        <Logo isDark={!scrolled} />
 
+        {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-10">
           {nav.map((n) => (
             <Link
               key={n.to}
               to={n.to}
               activeOptions={{ exact: n.to === "/" }}
-              activeProps={{ className: "text-foreground after:scale-x-100" }}
-              inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
-              className="relative text-sm tracking-wide transition-colors after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:bg-foreground after:scale-x-0 after:origin-left after:transition-transform after:duration-500"
+              activeProps={{ className: scrolled ? "text-gold font-bold" : "text-white font-bold" }}
+              inactiveProps={{ className: scrolled ? "text-ink/60 hover:text-ink" : "text-background/70 hover:text-white" }}
+              className="text-[0.7rem] uppercase tracking-[0.3em] transition-all duration-500 relative group py-2"
             >
               {n.label}
+              <span className={`absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold group-hover:w-full transition-all duration-500 rounded-full`} />
+              {/* Active indicator dot */}
+              <span className="absolute -top-1 left-1/2 -translate-x-1/2 size-1 rounded-full bg-gold opacity-0 scale-0 transition-all duration-500 [[data-status=active]_&]:opacity-100 [[data-status=active]_&]:scale-100" />
             </Link>
           ))}
         </nav>
@@ -55,44 +56,60 @@ export function SiteHeader() {
         <div className="hidden lg:block">
           <Link
             to="/contact"
-            className="inline-flex items-center justify-center rounded-full bg-foreground text-background px-6 py-3 text-sm tracking-wide hover:bg-gold hover:text-ink transition-luxe shadow-soft"
+            className={`inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-[0.75rem] uppercase tracking-[0.2em] font-bold transition-all duration-500 shadow-luxe group hover:scale-105 active:scale-95 ${
+              scrolled ? "bg-ink text-background hover:bg-gold hover:text-ink" : "bg-white text-ink hover:bg-gold"
+            }`}
           >
-            Book Your Date
+            Book Your Date <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </Link>
         </div>
 
         <button
           aria-label="Open menu"
           onClick={() => setOpen((v) => !v)}
-          className="lg:hidden p-2 text-foreground"
+          className="lg:hidden p-3 rounded-full bg-ink/5 hover:bg-ink/10 transition-colors"
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
+      {/* Mobile Nav Overlay */}
       {open && (
-        <div className="lg:hidden bg-background/98 backdrop-blur-xl border-t border-border animate-float-up">
-          <div className="container-luxe py-6 flex flex-col gap-5">
-            {nav.map((n) => (
-              <Link
-                key={n.to}
-                to={n.to}
-                onClick={() => setOpen(false)}
-                className="text-lg font-display text-foreground"
-              >
-                {n.label}
-              </Link>
-            ))}
-            <Link
-              to="/contact"
-              onClick={() => setOpen(false)}
-              className="mt-2 inline-flex items-center justify-center rounded-full bg-foreground text-background px-6 py-3 text-sm"
-            >
-              Book Your Date
-            </Link>
+        <div className="lg:hidden fixed inset-0 z-[-1] bg-background/95 backdrop-blur-2xl animate-in fade-in duration-500">
+          <div className="container-luxe pt-32 pb-12 h-full flex flex-col justify-between">
+            <nav className="flex flex-col gap-8">
+              {nav.map((n, i) => (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  onClick={() => setOpen(false)}
+                  className="text-5xl font-display text-foreground hover:text-gold transition-colors flex items-center justify-between group animate-float-up"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  {n.label}
+                  <ArrowUpRight size={32} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                </Link>
+              ))}
+            </nav>
+            
+            <div className="space-y-8 animate-float-up" style={{ animationDelay: "0.6s" }}>
+              <div className="h-px bg-border/50" />
+              <div className="flex flex-col gap-4 text-center">
+                <p className="eyebrow text-gold">South Florida's Premier Studio</p>
+                <Link
+                  to="/contact"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center justify-center rounded-full bg-foreground text-background py-5 text-sm font-bold tracking-widest uppercase"
+                >
+                  Request A Quote
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}
     </header>
   );
 }
+
+
