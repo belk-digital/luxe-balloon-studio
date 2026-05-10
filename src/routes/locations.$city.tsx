@@ -84,7 +84,7 @@ const data: Record<string, {
 };
 
 export const Route = createFileRoute("/locations/$city")({
-  loader: ({ params }) => {
+  loader: ({ params }: { params: { city: string } }) => {
     const city = data[params.city];
     if (!city) throw notFound();
     return { city };
