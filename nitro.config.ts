@@ -1,5 +1,5 @@
 import { defineNitroConfig } from "nitro/config";
 
 export default defineNitroConfig({
-  preset: "netlify-edge",
+  preset: "netlify",
 });
