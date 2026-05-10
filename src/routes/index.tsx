@@ -1,9 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Sparkles, Heart, Star, Calendar, Palette, Truck, MapPin,
-  Instagram, MessageCircle, Check, ChevronDown,
-} from "lucide-react";
 import { useState } from "react";
+import { Sparkles, ArrowUpRight, Camera, Star, MapPin, Instagram, ChevronDown } from "lucide-react";
 import heroImg from "@/assets/hero-balloons.jpg";
 import gBaby from "@/assets/gallery-baby.jpg";
 import gBirthday from "@/assets/gallery-birthday.jpg";
@@ -11,541 +8,332 @@ import gWedding from "@/assets/gallery-wedding.jpg";
 import gCorporate from "@/assets/gallery-corporate.jpg";
 import gBridal from "@/assets/gallery-bridal.jpg";
 import gOutdoor from "@/assets/gallery-outdoor.jpg";
-import { SectionHeader, PrimaryButton } from "@/components/ui-bits";
-import { services, cities, allCities } from "@/lib/site-data";
+import { SectionHeader } from "@/components/ui-bits";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Balloon Gal | Luxury Balloon Decor in South Florida" },
-      {
-        name: "description",
-        content:
-          "Luxury balloon decor & event styling across Miami, Fort Lauderdale, Boca Raton & Palm Beach. Custom organic balloon garlands, arches, and installations for unforgettable celebrations.",
-      },
-      { property: "og:title", content: "Luxury Balloon Decor South Florida | The Balloon Gal" },
-      {
-        property: "og:description",
-        content:
-          "Custom luxury balloon installations for birthdays, baby showers, weddings, and corporate events across South Florida.",
-      },
-      { property: "og:image", content: heroImg },
-      { name: "twitter:image", content: heroImg },
-    ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((f) => ({
-            "@type": "Question",
-            name: f.q,
-            acceptedAnswer: { "@type": "Answer", text: f.a },
-          })),
-        }),
-      },
+      { title: "The Balloon Gal | Luxury Balloon Decor & Event Styling South Florida" },
+      { name: "description", content: "South Florida's premier luxury balloon studio. Artisan installations for Miami, Fort Lauderdale, Boca Raton, and Palm Beach." },
     ],
   }),
   component: HomePage,
 });
 
-const faqs = [
-  { q: "How much does luxury balloon decor cost in South Florida?", a: "Our installations begin at $450 for intimate setups, with most full event installs ranging between $850 and $4,500+. Pricing depends on size, complexity, palette, and venue. We send a custom quote within 24 hours of your inquiry." },
-  { q: "Do you travel across South Florida?", a: "Yes — we serve Miami, Fort Lauderdale, Boca Raton, Palm Beach, Hollywood, Pembroke Pines, Aventura, Weston, Coral Springs, Delray Beach, Kendall, Hialeah, and surrounding South Florida areas. Travel beyond 25 miles includes a small delivery fee." },
-  { q: "How far in advance should I book?", a: "We recommend booking 3–6 weeks ahead for weekend dates. Peak season (graduation, holidays, wedding season) books out faster, so reach out as soon as you have a date." },
-  { q: "Do balloons last outdoors in Florida weather?", a: "Yes, we use professional-grade balloons treated for outdoor durability. For long daytime events, we plan installations with shade, color choice, and timing in mind to keep your decor looking fresh." },
-  { q: "Can you match my event theme and colors?", a: "Absolutely. Every Balloon Gal install is fully custom — we design palettes around your invitation, brand, or mood board." },
-  { q: "Do you provide backdrops and rentals?", a: "Yes — we offer circular backdrops, mesh arches, plinths, marquee numbers, neon signs, and a curated rental collection styled into your installation." },
-  { q: "What types of events do you decorate?", a: "Birthdays, baby showers, bridal showers, gender reveals, weddings, corporate events, grand openings, brand activations, graduations, and luxury private parties." },
-  { q: "How long does setup take?", a: "On-site installation typically takes 1–4 hours depending on scale. We arrive early so your venue is camera-ready before guests arrive." },
-  { q: "Do you offer corporate balloon decor?", a: "Yes — brand-aligned installs, step-and-repeat backdrops, and activation pieces for product launches, conferences, and corporate parties throughout South Florida." },
-  { q: "Do you handle breakdown after the event?", a: "Yes, full setup and breakdown are included for installations that require it. You enjoy the event — we handle the rest." },
-];
-
 function HomePage() {
   return (
-    <>
+    <div className="pt-0">
       <Hero />
-      <TrustBar />
-      <Services />
-      <WhyUs />
-      <Gallery />
-      <BeforeAfter />
-      <Process />
-      <Locations />
-      <Trends />
-      <InstagramSection />
-      <Testimonials />
-      <Pricing />
-      <FAQ />
-      <Blog />
-      <CTABanner />
-      <ContactPreview />
-    </>
+      <BrandPhilosophy />
+      <BentoServices />
+      <ShowcaseMarquee />
+      <LocationsSection />
+      <TheLuxeStandard />
+      <TestimonialHero />
+      <FAQSection />
+      <FinalCTA />
+    </div>
   );
 }
 
-/* ---------------- HERO ---------------- */
+const faqs = [
+  { q: "How much does luxury balloon decor cost?", a: "Our installations begin at $450 for intimate setups, with most full event installs ranging between $850 and $4,500+. We send a custom quote within 24 hours of your inquiry." },
+  { q: "Do you travel across South Florida?", a: "Yes — we serve Miami, Fort Lauderdale, Boca Raton, Palm Beach, and surrounding areas. Travel beyond 25 miles includes a small delivery fee." },
+  { q: "How far in advance should I book?", a: "We recommend booking 3–6 weeks ahead for weekend dates to ensure availability." },
+  { q: "Do balloons last outdoors in Florida?", a: "Yes, we use professional-grade balloons treated for durability. We plan installations based on sun exposure and timing to keep them looking fresh." },
+  { q: "Can you match my event theme?", a: "Absolutely. Every install is fully custom — we design palettes around your specific mood board or invitation." },
+];
+
+/* --- 1. HERO: Cinematic & Bold --- */
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="container-luxe pt-12 lg:pt-20 pb-20 lg:pb-28">
-        <div className="grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-6 animate-float-up">
-            <p className="eyebrow">South Florida · Est. 2018</p>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl mt-6 leading-[0.95] text-foreground">
-              Luxury balloon decor that turns moments into{" "}
-              <span className="italic text-gradient-gold">experiences.</span>
-            </h1>
-            <p className="mt-7 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              Custom installations for birthdays, baby showers, weddings, and
-              corporate events — designed for the camera, styled for South
-              Florida's most discerning hosts.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <PrimaryButton to="/contact" variant="dark">Book Your Event</PrimaryButton>
-              <PrimaryButton to="/contact" variant="ghost">Get a Quote</PrimaryButton>
-            </div>
-            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="flex">{[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-gold text-gold" />)}</div>
-                <span className="text-muted-foreground">5.0 · 200+ events</span>
-              </div>
-              <a href="https://instagram.com" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-                <Instagram size={16} /> 38K on Instagram
-              </a>
-            </div>
-            <div className="mt-8 flex flex-wrap gap-2">
-              {["Birthdays", "Weddings", "Baby Showers", "Corporate"].map((t) => (
-                <span key={t} className="text-xs tracking-wider uppercase px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground border border-border">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </div>
+    <section className="relative h-screen flex items-center overflow-hidden bg-ink">
+      <div className="absolute inset-0 z-0">
+        <img src={heroImg} alt="Luxury balloons" className="w-full h-full object-cover opacity-60 scale-105 animate-reveal" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/20 to-ink/90" />
+      </div>
 
-          <div className="lg:col-span-6 relative">
-            <div className="absolute -inset-8 bg-gradient-blush rounded-[3rem] -z-10 opacity-70" />
-            <div className="relative rounded-[2.5rem] overflow-hidden shadow-luxe">
-              <img
-                src={heroImg}
-                alt="Luxury organic balloon arch in champagne gold and blush by The Balloon Gal"
-                width={1920}
-                height={1080}
-                className="w-full h-auto"
-              />
-            </div>
-            <div className="absolute -left-4 lg:-left-10 bottom-8 bg-background/95 backdrop-blur-md rounded-2xl shadow-soft p-5 max-w-[220px] animate-float-balloon">
-              <p className="eyebrow">Trusted by</p>
-              <p className="font-display text-2xl mt-1">200+ hosts</p>
-              <p className="text-xs text-muted-foreground mt-1">across South Florida</p>
-            </div>
+      <div className="container-luxe relative z-10 w-full pt-20">
+        <div className="max-w-4xl animate-float-up">
+          <p className="eyebrow text-gold mb-8 inline-flex items-center gap-4">
+             <span className="w-12 h-px bg-gold/50" />
+             South Florida's Premier Studio
+          </p>
+          <h1 className="text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] tracking-tighter text-background font-semibold">
+            Artisan <br />
+            <span className="font-serif italic text-gradient-gold">Balloons.</span>
+          </h1>
+          <p className="mt-10 text-xl md:text-2xl text-background/70 max-w-2xl font-light leading-relaxed">
+            Redefining celebration with high-impact, organic styling for Miami's most exclusive events.
+          </p>
+          
+          <div className="mt-12 flex flex-wrap items-center gap-8">
+            <Link to="/contact" className="px-10 py-5 bg-gold text-ink rounded-full font-bold uppercase tracking-widest text-sm hover:bg-background transition-all shadow-gold">
+               Start My Design
+            </Link>
+            <Link to="/gallery" className="group flex items-center gap-4 text-background/80 hover:text-gold transition-colors">
+               <span className="text-sm font-bold uppercase tracking-widest">Explore Portfolio</span>
+               <div className="size-10 rounded-full border border-background/20 flex items-center justify-center group-hover:border-gold transition-all">
+                  <ArrowUpRight size={18} />
+               </div>
+            </Link>
           </div>
         </div>
       </div>
+
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 animate-bounce opacity-40">
+         <div className="w-px h-16 bg-gradient-to-b from-transparent to-background" />
+      </div>
     </section>
   );
 }
 
-/* ---------------- TRUST BAR ---------------- */
-function TrustBar() {
-  const stats = [
-    { v: "6+", l: "Years Styling" },
-    { v: "500+", l: "Events Designed" },
-    { v: "12", l: "Cities Served" },
-    { v: "5.0★", l: "Client Rating" },
+/* --- 2. PHILOSOPHY: The Intro --- */
+function BrandPhilosophy() {
+  return (
+    <section className="section-pad bg-background">
+      <div className="container-luxe">
+         <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+               <SectionHeader
+                 align="left"
+                 eyebrow="The Experience"
+                 title={<>For hosts who want <span className="font-serif italic text-gradient-gold">more.</span></>}
+                 description="We don't just provide balloons; we architect environments. Every installation is a custom-colored, hand-sculpted piece of temporary art designed to turn a venue into an experience."
+               />
+               <div className="mt-10 grid grid-cols-2 gap-10">
+                  <div>
+                     <p className="font-display text-4xl mb-2">600+</p>
+                     <p className="text-[0.6rem] uppercase tracking-widest font-bold text-muted-foreground">Events Styled</p>
+                  </div>
+                  <div>
+                     <p className="font-display text-4xl mb-2">5.0★</p>
+                     <p className="text-[0.6rem] uppercase tracking-widest font-bold text-muted-foreground">Client Rating</p>
+                  </div>
+               </div>
+            </div>
+            <div className="relative">
+               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-luxe group">
+                  <img src={gWedding} alt="Wedding decor" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
+               </div>
+               <div className="absolute -bottom-10 -left-10 glass p-8 rounded-3xl shadow-luxe max-w-[240px] animate-float-balloon">
+                  <p className="italic text-lg leading-relaxed">"A visual masterpiece that our guests are still talking about weeks later."</p>
+                  <p className="mt-4 text-[0.6rem] uppercase tracking-widest font-bold text-gold">Sofia R. · Miami</p>
+               </div>
+            </div>
+         </div>
+      </div>
+    </section>
+  );
+}
+
+/* --- 3. BENTO SERVICES: Visual Grid --- */
+function BentoServices() {
+  const items = [
+    { t: "Weddings", d: "Editorial styling for high-end ceremonies.", img: gWedding, span: "md:col-span-2 md:row-span-2" },
+    { t: "Corporate", d: "Brand-aligned activations.", img: gCorporate, span: "md:col-span-1 md:row-span-1" },
+    { t: "Birthdays", d: "From first to fiftieth.", img: gBirthday, span: "md:col-span-1 md:row-span-2" },
+    { t: "Showers", d: "Bespoke baby & bridal designs.", img: gBaby, span: "md:col-span-1 md:row-span-1" },
   ];
-  return (
-    <section className="border-y border-border bg-secondary/40">
-      <div className="container-luxe py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
-        {stats.map((s) => (
-          <div key={s.l} className="text-center md:text-left">
-            <p className="font-display text-4xl md:text-5xl text-foreground">{s.v}</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">{s.l}</p>
-          </div>
-        ))}
-      </div>
-      <div className="container-luxe pb-10 flex flex-wrap items-center justify-center md:justify-between gap-6 text-xs uppercase tracking-[0.28em] text-muted-foreground/80">
-        {["Luxury Birthdays", "Baby Showers", "Bridal & Weddings", "Corporate", "Brand Activations", "Private Estates"].map((t) => (
-          <span key={t}>· {t} ·</span>
-        ))}
-      </div>
-    </section>
-  );
-}
 
-/* ---------------- SERVICES ---------------- */
-function Services() {
-  const featured = services.slice(0, 6);
-  const imgs = [gBirthday, gBaby, gWedding, gCorporate, gBridal, gOutdoor];
   return (
-    <section className="section-pad">
+    <section className="section-pad bg-secondary/30">
       <div className="container-luxe">
         <SectionHeader
           eyebrow="Signature Services"
-          title={<>Designed for the camera, <em className="font-display italic text-gradient-gold">styled for you.</em></>}
-          description="Every installation is fully custom — palettes, scale, and styling tailored to your venue, brand, and vision."
+          title={<>Curated for your <span className="font-serif italic text-gradient-gold">Milestones.</span></>}
         />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
-          {featured.map((s, i) => (
-            <Link
-              key={s.slug}
-              to="/services"
-              className="group rounded-3xl bg-card overflow-hidden border border-border shadow-soft hover:shadow-luxe transition-luxe"
-            >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img
-                  src={imgs[i]}
-                  alt={`${s.title} by The Balloon Gal`}
-                  width={1024}
-                  height={1280}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-display text-2xl text-foreground">{s.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.blurb}</p>
-                <span className="inline-flex items-center gap-1 mt-4 text-xs uppercase tracking-[0.2em] text-foreground group-hover:text-gold transition-colors">
-                  Explore →
-                </span>
+        <div className="mt-12 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[240px] md:auto-rows-[280px]">
+          {items.map((it, i) => (
+            <Link key={i} to="/services" className={`group relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-soft ${it.span}`}>
+              <img src={it.img} alt={it.t} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8 md:right-8">
+                 <h3 className="font-display text-2xl md:text-3xl text-background mb-2">{it.t}</h3>
+                 <p className="text-xs md:text-sm text-background/60 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">{it.d}</p>
               </div>
             </Link>
           ))}
         </div>
-        <div className="text-center mt-12">
-          <PrimaryButton to="/services" variant="ghost">View All Services</PrimaryButton>
-        </div>
       </div>
     </section>
   );
 }
 
-/* ---------------- WHY US ---------------- */
-function WhyUs() {
-  const items = [
-    { i: Sparkles, t: "Custom Installations", d: "No templates. Every design is sketched and styled from scratch around your event." },
-    { i: Heart, t: "Obsessive Detail", d: "From color matching to balloon clusters, every element is intentional and editorial." },
-    { i: Palette, t: "Signature Palettes", d: "Trend-forward color stories — neutral luxe, blush & gold, tropical Miami, monochrome." },
-    { i: Star, t: "Premium Materials", d: "Pro-grade balloons, refined finishes, and rental pieces that elevate every install." },
-    { i: Truck, t: "Setup & Breakdown", d: "Door-to-door installation across South Florida. You enjoy the event — we handle everything." },
-    { i: Calendar, t: "Concierge Process", d: "From inquiry to install, a personalized experience designed to feel effortless." },
-  ];
+/* --- 4. SHOWCASE MARQUEE: Immersive --- */
+function ShowcaseMarquee() {
   return (
-    <section className="section-pad bg-gradient-luxe">
-      <div className="container-luxe">
-        <SectionHeader
-          eyebrow="Why The Balloon Gal"
-          title={<>The South Florida choice for hosts who want it <em className="italic text-gradient-gold">elevated.</em></>}
-        />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
-          {items.map(({ i: Icon, t, d }) => (
-            <div key={t} className="rounded-2xl bg-background/70 backdrop-blur-sm border border-border/60 p-7 hover:bg-background hover:shadow-soft transition-luxe">
-              <div className="size-12 rounded-full bg-gradient-gold flex items-center justify-center text-ink">
-                <Icon size={20} />
-              </div>
-              <h3 className="font-display text-xl mt-5 text-foreground">{t}</h3>
-              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{d}</p>
+    <section className="py-20 md:py-32 overflow-hidden bg-ink text-background relative">
+       <div className="container-luxe mb-10 md:mb-16">
+          <SectionHeader
+            eyebrow="Portfolio"
+            title={<>A snapshot of <span className="font-serif italic text-gradient-gold">Artistry.</span></>}
+          />
+       </div>
+       <div className="flex gap-4 md:gap-6 animate-parallax-float px-6 md:px-0" style={{ animationDuration: '40s' }}>
+          {[gOutdoor, gBridal, heroImg, gBaby, gWedding].map((img, i) => (
+            <div key={i} className="min-w-[280px] md:min-w-[400px] h-[350px] md:h-[500px] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl relative group">
+               <img src={img} alt="Showcase" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+               <div className="absolute inset-0 bg-ink/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Camera className="text-background" size={40} />
+               </div>
             </div>
           ))}
-        </div>
-      </div>
+       </div>
     </section>
   );
 }
 
-/* ---------------- GALLERY ---------------- */
-function Gallery() {
-  const items = [
-    { src: gBirthday, alt: "Luxury birthday balloon arch Miami", cat: "Birthdays", span: "row-span-2" },
-    { src: gWedding, alt: "Wedding balloon installation Fort Lauderdale", cat: "Weddings", span: "" },
-    { src: gBaby, alt: "Neutral baby shower balloon decor Boca Raton", cat: "Baby Showers", span: "" },
-    { src: gCorporate, alt: "Corporate balloon backdrop Miami", cat: "Corporate", span: "row-span-2" },
-    { src: gBridal, alt: "Bridal shower balloon decor Palm Beach", cat: "Bridal", span: "" },
-    { src: gOutdoor, alt: "Outdoor balloon installation South Florida", cat: "Outdoor", span: "" },
-  ];
+/* --- 5. LOCATIONS: Restored --- */
+function LocationsSection() {
+  const cities = ["Miami", "Fort Lauderdale", "Boca Raton", "Palm Beach"];
   return (
-    <section className="section-pad">
-      <div className="container-luxe">
-        <SectionHeader
-          eyebrow="Selected Work"
-          title={<>A portfolio that speaks <em className="italic text-gradient-gold">in pastels & gold.</em></>}
-          description="A snapshot from recent celebrations across Miami, Fort Lauderdale, Boca Raton, and Palm Beach."
-        />
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 auto-rows-[200px] md:auto-rows-[260px] gap-4">
-          {items.map((it, i) => (
-            <div key={i} className={`relative overflow-hidden rounded-2xl group ${it.span}`}>
-              <img src={it.src} alt={it.alt} loading="lazy" width={1024} height={1280} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.2s]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="absolute bottom-4 left-4 text-background text-xs uppercase tracking-[0.25em] opacity-0 group-hover:opacity-100 transition-opacity">{it.cat}</span>
-            </div>
-          ))}
-        </div>
-        <div className="text-center mt-12">
-          <PrimaryButton to="/gallery" variant="ghost">View Full Gallery</PrimaryButton>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- BEFORE / AFTER ---------------- */
-function BeforeAfter() {
-  return (
-    <section className="section-pad bg-secondary/40">
-      <div className="container-luxe">
-        <SectionHeader
-          eyebrow="Transformations"
-          title={<>From empty venue to <em className="italic text-gradient-gold">unforgettable.</em></>}
-          description="The Balloon Gal experience is about transformation — turning ordinary spaces into editorial-worthy moments."
-        />
-        <div className="mt-14 grid md:grid-cols-2 gap-6">
-          {[
-            { label: "Before", img: gOutdoor, copy: "Bare patio, no focal point, no styled photo moment." },
-            { label: "After", img: gBirthday, copy: "A sculpted arch, custom palette, and signage your guests photograph for hours." },
-          ].map((b) => (
-            <div key={b.label} className="rounded-3xl overflow-hidden bg-card shadow-soft">
-              <div className="relative">
-                <img src={b.img} alt={`${b.label} balloon installation`} loading="lazy" width={1024} height={1280} className="w-full aspect-[4/3] object-cover" />
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-background/90 backdrop-blur text-xs uppercase tracking-[0.25em]">{b.label}</span>
-              </div>
-              <p className="p-6 text-muted-foreground">{b.copy}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- PROCESS ---------------- */
-function Process() {
-  const steps = [
-    { n: "01", t: "Inquiry", d: "Share your event details, mood, and vision through our quick contact form." },
-    { n: "02", t: "Consultation", d: "We follow up within 24 hours with palette ideas, sketches, and a custom quote." },
-    { n: "03", t: "Custom Design", d: "Once booked, we lock in your color story, scale, and styling pieces." },
-    { n: "04", t: "Setup Day", d: "Our team arrives early and installs while you enjoy your morning." },
-    { n: "05", t: "Event Perfection", d: "Camera-ready before doors open. Optional breakdown, no stress." },
-  ];
-  return (
-    <section className="section-pad">
-      <div className="container-luxe">
-        <SectionHeader
-          eyebrow="The Process"
-          title={<>How it <em className="italic text-gradient-gold">works.</em></>}
-        />
-        <div className="mt-16 grid md:grid-cols-5 gap-8 relative">
-          {steps.map((s) => (
-            <div key={s.n} className="relative">
-              <p className="font-display text-5xl text-gradient-gold">{s.n}</p>
-              <h3 className="font-display text-xl mt-3">{s.t}</h3>
-              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.d}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- LOCATIONS ---------------- */
-function Locations() {
-  return (
-    <section className="section-pad bg-ink text-background">
-      <div className="container-luxe">
-        <div className="grid lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-5">
-            <p className="eyebrow text-background/60">Service Area</p>
-            <h2 className="font-display text-4xl md:text-5xl mt-4 leading-tight">
-              Luxury balloon decor across all of <span className="italic text-gradient-gold">South Florida.</span>
-            </h2>
-            <p className="mt-6 text-background/70 leading-relaxed">
-              From oceanfront estates in Palm Beach to penthouse rooftops in Miami,
-              The Balloon Gal styles celebrations across the region's most beautiful venues.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-2">
-              {allCities.map((c) => (
-                <span key={c} className="text-xs uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border border-background/20 text-background/80 hover:border-gold hover:text-gold transition-colors">
-                  <MapPin size={10} className="inline mr-1" />{c}
-                </span>
-              ))}
-            </div>
+    <section className="section-pad bg-background">
+       <div className="container-luxe">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+             <div className="aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-luxe">
+                <img src={gOutdoor} alt="South Florida service area" className="w-full h-full object-cover" />
+             </div>
+             <div>
+                <SectionHeader
+                  align="left"
+                  eyebrow="Service Areas"
+                  title={<>Across all of <span className="font-serif italic text-gradient-gold">South Florida.</span></>}
+                  description="From oceanfront estates to corporate headquarters, we bring our signature styling to the region's most beautiful venues."
+                />
+                <div className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                   {cities.map(city => (
+                      <Link 
+                        key={city} 
+                        to="/locations" 
+                        className="p-5 md:p-6 rounded-[1.5rem] md:rounded-3xl border border-border hover:border-gold hover:text-gold transition-all group"
+                      >
+                         <MapPin size={16} className="mb-2 md:mb-3 text-gold" />
+                         <p className="font-display text-lg md:text-xl">{city}</p>
+                         <span className="text-[0.6rem] uppercase tracking-widest font-bold opacity-60 md:opacity-40 md:group-hover:opacity-100 transition-opacity">Explore →</span>
+                      </Link>
+                   ))}
+                </div>
+             </div>
           </div>
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-            {cities.map((c) => (
-              <Link
-                key={c.slug}
-                to="/locations/$city"
-                params={{ city: c.slug }}
-                className="rounded-2xl border border-background/15 p-7 hover:bg-background/5 transition-luxe group"
-              >
-                <p className="eyebrow text-gold">Balloon Decor</p>
-                <h3 className="font-display text-3xl mt-2">{c.name}</h3>
-                <p className="text-sm text-background/60 mt-3 leading-relaxed">
-                  Custom luxury balloon installations for {c.name} birthdays, weddings, baby showers, and corporate events.
-                </p>
-                <span className="inline-flex items-center gap-1 mt-5 text-xs uppercase tracking-[0.25em] text-gold">Explore {c.name} →</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+       </div>
     </section>
   );
 }
 
-/* ---------------- TRENDS ---------------- */
-function Trends() {
-  const trends = [
-    { t: "Neutral Luxe", d: "Ivory, nude, champagne. Minimal & editorial.", c: "from-stone-200 to-amber-100" },
-    { t: "Tropical Miami", d: "Coral, blush, palm greens. South Florida energy.", c: "from-rose-200 to-emerald-200" },
-    { t: "White & Gold", d: "Timeless wedding & milestone styling.", c: "from-amber-100 to-yellow-200" },
-    { t: "Pastel Baby", d: "Soft blush, pearl, and dusty mauve.", c: "from-pink-100 to-rose-200" },
-    { t: "Barbiecore", d: "Hot pink, magenta & chrome accents.", c: "from-pink-300 to-fuchsia-400" },
-    { t: "Modern Mono", d: "Matte black & gold for sleek corporate.", c: "from-stone-700 to-amber-700" },
+
+/* --- 5. THE STANDARD: Why Us --- */
+function TheLuxeStandard() {
+  const items = [
+    { t: "Organic Styling", d: "No rigid templates. We mimic the natural movement of bubbles and clouds." },
+    { t: "Custom Palettes", d: "We hand-layer balloons to create unique colors you won't find anywhere else." },
+    { t: "White-Glove Service", d: "From first sketch to final teardown, every detail is handled by our expert team." }
   ];
-  return (
-    <section className="section-pad">
-      <div className="container-luxe">
-        <SectionHeader
-          eyebrow="Trending Palettes"
-          title={<>Color stories <em className="italic text-gradient-gold">South Florida loves.</em></>}
-        />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
-          {trends.map((t) => (
-            <div key={t.t} className="rounded-2xl border border-border overflow-hidden hover:shadow-soft transition-luxe">
-              <div className={`h-32 bg-gradient-to-br ${t.c}`} />
-              <div className="p-6">
-                <h3 className="font-display text-2xl">{t.t}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{t.d}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-/* ---------------- INSTAGRAM ---------------- */
-function InstagramSection() {
-  const tiles = [gBirthday, gWedding, gBaby, gCorporate, gBridal, gOutdoor];
   return (
-    <section className="section-pad bg-secondary/40">
-      <div className="container-luxe">
-        <SectionHeader
-          eyebrow="@theballoongal"
-          title={<>Seen on <em className="italic text-gradient-gold">Instagram.</em></>}
-          description="Trending event aesthetics, custom color themes, and viral-worthy installations from across South Florida."
-        />
-        <div className="mt-14 grid grid-cols-3 md:grid-cols-6 gap-3">
-          {tiles.map((t, i) => (
-            <a key={i} href="https://instagram.com" target="_blank" rel="noreferrer" className="aspect-square overflow-hidden rounded-xl group relative">
-              <img src={t} alt="Instagram balloon decor" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors flex items-center justify-center">
-                <Instagram className="text-background opacity-0 group-hover:opacity-100 transition" size={24} />
-              </div>
-            </a>
-          ))}
-        </div>
-        <div className="text-center mt-10">
-          <a href="https://instagram.com" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-foreground text-background px-7 py-3.5 text-sm hover:bg-gold hover:text-ink transition-luxe">
-            <Instagram size={16} /> Follow Along
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- TESTIMONIALS ---------------- */
-function Testimonials() {
-  const reviews = [
-    { n: "Sofia M.", e: "Sweet 16, Coral Gables", r: "The Balloon Gal completely transformed our venue. Every guest asked who designed it. Worth every dollar — and then some.", },
-    { n: "Carlos & Renata", e: "Wedding, Fort Lauderdale", r: "From our first call to the install, everything felt premium. Our sweetheart table was the most photographed moment of the night.", },
-    { n: "Hadley Studio", e: "Brand Launch, Miami", r: "Working with The Balloon Gal on our launch event was effortless. Our backdrop went viral on socials within hours.", },
-  ];
-  return (
-    <section className="section-pad">
-      <div className="container-luxe">
-        <SectionHeader eyebrow="Kind Words" title={<>What South Florida hosts <em className="italic text-gradient-gold">are saying.</em></>} />
-        <div className="grid md:grid-cols-3 gap-6 mt-14">
-          {reviews.map((r) => (
-            <div key={r.n} className="rounded-3xl bg-card border border-border p-8 shadow-soft hover:shadow-luxe transition-luxe">
-              <div className="flex">{[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-gold text-gold" />)}</div>
-              <p className="mt-5 font-display text-xl leading-relaxed text-foreground">"{r.r}"</p>
-              <div className="mt-6 pt-6 border-t border-border">
-                <p className="font-medium text-foreground">{r.n}</p>
-                <p className="text-xs text-muted-foreground mt-1">{r.e}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- PRICING ---------------- */
-function Pricing() {
-  const tiers = [
-    { n: "Petite", p: "$450+", f: ["Compact garland", "Up to 4 ft", "1 color story", "Drop-off install"] },
-    { n: "Signature", p: "$950+", f: ["Sculpted garland or arch", "Up to 12 ft", "Custom palette", "Setup & styling included"], featured: true },
-    { n: "Statement", p: "$2,200+", f: ["Full venue installation", "Backdrop + accents", "Concierge design", "Setup & breakdown"] },
-  ];
-  return (
-    <section className="section-pad bg-gradient-blush">
-      <div className="container-luxe">
-        <SectionHeader
-          eyebrow="Investment Preview"
-          title={<>Transparent starting <em className="italic text-gradient-gold">pricing.</em></>}
-          description="Final pricing depends on scale, location, and styling pieces. Every quote is custom and sent within 24 hours."
-        />
-        <div className="grid md:grid-cols-3 gap-6 mt-14">
-          {tiers.map((t) => (
-            <div
-              key={t.n}
-              className={`rounded-3xl p-8 border ${t.featured ? "bg-ink text-background border-ink shadow-luxe scale-105" : "bg-background/70 border-border shadow-soft"}`}
-            >
-              <p className={`eyebrow ${t.featured ? "text-background/60" : ""}`}>{t.featured ? "Most Booked" : "Tier"}</p>
-              <h3 className="font-display text-3xl mt-2">{t.n}</h3>
-              <p className={`font-display text-5xl mt-4 ${t.featured ? "text-gradient-gold" : "text-foreground"}`}>{t.p}</p>
-              <ul className="mt-7 space-y-3 text-sm">
-                {t.f.map((f) => (
-                  <li key={f} className="flex items-center gap-2">
-                    <Check size={14} className="text-gold" /> {f}
-                  </li>
+    <section className="section-pad bg-background relative overflow-hidden">
+       <div className="container-luxe">
+          <div className="max-w-4xl">
+             <SectionHeader
+               align="left"
+               eyebrow="The Standard"
+               title={<>Why we're the <span className="font-serif italic text-gradient-gold">Choice</span> of South Florida.</>}
+             />
+             <div className="mt-12 md:mt-20 space-y-8 md:space-y-16">
+                {items.map((it, i) => (
+                   <div key={i} className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start group">
+                      <div className="md:col-span-1">
+                         <span className="font-display text-3xl md:text-4xl text-gold/30 group-hover:text-gold transition-colors">0{i+1}</span>
+                      </div>
+                      <div className="md:col-span-4">
+                         <h3 className="font-display text-2xl md:text-3xl">{it.t}</h3>
+                      </div>
+                      <div className="md:col-span-7">
+                         <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{it.d}</p>
+                      </div>
+                      <div className="hidden md:block md:col-span-12 h-px bg-border group-hover:bg-gold/30 transition-colors" />
+                   </div>
                 ))}
-              </ul>
-              <Link to="/contact" className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm transition-luxe ${t.featured ? "bg-gradient-gold text-ink" : "bg-foreground text-background hover:bg-gold hover:text-ink"}`}>Request Quote</Link>
-            </div>
-          ))}
-        </div>
-      </div>
+             </div>
+          </div>
+       </div>
     </section>
   );
 }
 
-/* ---------------- FAQ ---------------- */
-function FAQ() {
+/* --- 6. TESTIMONIAL HERO --- */
+function TestimonialHero() {
+  return (
+    <section className="section-pad bg-secondary/20">
+       <div className="container-luxe text-center px-4">
+          <div className="size-16 md:size-20 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-8 md:mb-12">
+             <Star className="text-gold fill-gold" size={24} md:size={30} />
+          </div>
+          <h2 className="font-display text-2xl md:text-6xl max-w-4xl mx-auto leading-tight">
+             "The Balloon Gal transformed our empty ballroom into a <span className="font-serif italic text-gradient-gold">visual masterpiece.</span> Their attention to detail is unmatched in Miami."
+          </h2>
+          <p className="mt-8 md:mt-10 eyebrow text-gold">Hadley Events · Corporate Client</p>
+       </div>
+    </section>
+  );
+}
+
+/* --- 7. FINAL CTA --- */
+function FinalCTA() {
+  return (
+    <section className="px-4 py-12 md:section-pad">
+       <div className="container-luxe">
+          <div className="rounded-[2.5rem] md:rounded-[4rem] bg-ink text-background p-8 md:p-16 lg:p-32 text-center relative overflow-hidden">
+             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--gold)_0%,_transparent_70%)]" />
+             <div className="relative z-10">
+                <Sparkles size={32} md:size={40} className="mx-auto text-gold mb-6 md:mb-10" />
+                <h2 className="font-display text-4xl md:text-8xl mb-6 md:mb-8 leading-tight md:leading-[0.9]">Ready to <br /> <span className="font-serif italic text-gradient-gold">Elevate?</span></h2>
+                <p className="text-base md:text-xl text-background/60 mb-8 md:mb-12 max-w-2xl mx-auto px-4">Limited availability for 2024–2025. Contact our concierge to secure your date.</p>
+                <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
+                   <Link to="/contact" className="px-10 md:px-12 py-4 md:py-6 bg-gold text-ink rounded-full font-bold uppercase tracking-widest text-xs md:text-sm hover:bg-background transition-all">
+                      Inquire Now
+                   </Link>
+                   <Link to="/gallery" className="px-10 md:px-12 py-4 md:py-6 border border-background/20 rounded-full font-bold uppercase tracking-widest text-xs md:text-sm hover:bg-background hover:text-ink transition-all">
+                      View Portfolio
+                   </Link>
+                </div>
+                
+                <div className="mt-12 md:mt-20 flex flex-wrap justify-center gap-6 md:gap-10 opacity-40 grayscale hover:grayscale-0 transition-all">
+                   <Instagram size={20} md:size={24} />
+                   <p className="text-[0.5rem] md:text-[0.6rem] uppercase tracking-widest font-bold">Miami</p>
+                   <p className="text-[0.5rem] md:text-[0.6rem] uppercase tracking-widest font-bold">Fort Lauderdale</p>
+                   <p className="text-[0.5rem] md:text-[0.6rem] uppercase tracking-widest font-bold">Palm Beach</p>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+  );
+}
+
+/* --- 8. FAQ: Restored --- */
+function FAQSection() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="section-pad">
+    <section className="section-pad bg-background">
       <div className="container-luxe max-w-4xl">
-        <SectionHeader eyebrow="FAQ" title={<>Everything <em className="italic text-gradient-gold">you might ask.</em></>} />
+        <SectionHeader eyebrow="FAQ" title={<>Common <span className="font-serif italic text-gradient-gold">Questions.</span></>} />
         <div className="mt-12 divide-y divide-border border-y border-border">
           {faqs.map((f, i) => (
             <button
               key={i}
               onClick={() => setOpen(open === i ? null : i)}
-              className="w-full text-left py-6 group"
+              className="w-full text-left py-8 group"
             >
               <div className="flex items-center justify-between gap-6">
-                <h3 className="font-display text-xl md:text-2xl text-foreground">{f.q}</h3>
-                <ChevronDown size={20} className={`shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
+                <h3 className="font-display text-2xl group-hover:text-gold transition-colors">{f.q}</h3>
+                <ChevronDown size={20} className={`shrink-0 transition-transform duration-500 ${open === i ? "rotate-180 text-gold" : ""}`} />
               </div>
-              {open === i && <p className="mt-4 text-muted-foreground leading-relaxed animate-float-up">{f.a}</p>}
+              {open === i && (
+                <div className="mt-4 text-lg text-muted-foreground leading-relaxed animate-float-up">
+                  {f.a}
+                </div>
+              )}
             </button>
           ))}
         </div>
@@ -554,93 +342,3 @@ function FAQ() {
   );
 }
 
-/* ---------------- BLOG ---------------- */
-function Blog() {
-  const posts = [
-    { t: "Best Balloon Themes for Baby Showers in 2026", c: "Trends" },
-    { t: "Luxury Birthday Party Trends in Miami Right Now", c: "Birthdays" },
-    { t: "Balloon Decor Ideas for Corporate Events", c: "Corporate" },
-    { t: "Outdoor Balloon Setup Tips for Florida Weather", c: "Outdoor" },
-  ];
-  return (
-    <section className="section-pad bg-secondary/40">
-      <div className="container-luxe">
-        <SectionHeader eyebrow="The Journal" title={<>Inspiration & <em className="italic text-gradient-gold">styling notes.</em></>} />
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mt-14">
-          {posts.map((p, i) => (
-            <article key={i} className="rounded-2xl bg-card border border-border p-6 hover:shadow-soft transition-luxe">
-              <p className="eyebrow text-gold">{p.c}</p>
-              <h3 className="font-display text-xl mt-3 leading-snug">{p.t}</h3>
-              <span className="inline-flex mt-5 text-xs uppercase tracking-[0.25em] text-foreground">Read →</span>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- CTA BANNER ---------------- */
-function CTABanner() {
-  return (
-    <section className="section-pad">
-      <div className="container-luxe">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-ink text-background p-12 lg:p-20 text-center shadow-luxe">
-          <div className="absolute inset-0 opacity-30 bg-gradient-to-br from-gold/30 via-transparent to-blush/30" />
-          <div className="relative">
-            <p className="eyebrow text-background/60">Let's Create</p>
-            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl mt-4">
-              Ready to <em className="italic text-gradient-gold">elevate</em> your event?
-            </h2>
-            <p className="mt-6 max-w-2xl mx-auto text-background/70">
-              Tell us about your celebration and we'll craft a custom proposal within 24 hours.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <PrimaryButton to="/contact" variant="gold">Get Free Quote</PrimaryButton>
-              <Link to="/contact" className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm border border-background/30 hover:bg-background hover:text-ink transition-luxe">
-                Book Your Date
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- CONTACT PREVIEW ---------------- */
-function ContactPreview() {
-  return (
-    <section className="section-pad">
-      <div className="container-luxe grid lg:grid-cols-2 gap-12 items-start">
-        <div>
-          <p className="eyebrow">Contact</p>
-          <h2 className="font-display text-4xl md:text-5xl mt-4 leading-tight">Let's start <em className="italic text-gradient-gold">styling.</em></h2>
-          <p className="mt-5 text-muted-foreground max-w-md leading-relaxed">
-            Share your event details and we'll respond within 24 hours with palette ideas and pricing.
-          </p>
-          <div className="mt-8 space-y-4 text-sm">
-            <p className="flex items-center gap-3"><MessageCircle size={16} /> hello@theballoongal.com</p>
-            <p className="flex items-center gap-3"><MapPin size={16} /> Serving all of South Florida · Miami → Palm Beach</p>
-            <p className="flex items-center gap-3"><Calendar size={16} /> Mon–Sat · 9am–7pm</p>
-          </div>
-        </div>
-        <form
-          className="rounded-3xl bg-card border border-border p-8 shadow-soft space-y-4"
-          onSubmit={(e) => { e.preventDefault(); alert("Thanks! We'll be in touch within 24 hours."); }}
-        >
-          <div className="grid sm:grid-cols-2 gap-4">
-            <input required maxLength={80} placeholder="Your name" className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold/40" />
-            <input required type="email" maxLength={120} placeholder="Email" className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold/40" />
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <input maxLength={80} placeholder="Event type" className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm" />
-            <input type="date" className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm" />
-          </div>
-          <textarea maxLength={1000} rows={4} placeholder="Tell us about your vision…" className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm" />
-          <button className="w-full rounded-full bg-foreground text-background py-3.5 text-sm tracking-wide hover:bg-gold hover:text-ink transition-luxe">Request My Quote</button>
-        </form>
-      </div>
-    </section>
-  );
-}
