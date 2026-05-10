@@ -8,9 +8,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [
     TanStackRouterVite(),
-    tanstackStart({
-      server: { entry: "src/server.ts" },
-    }),
+    tanstackStart(),
     react(),
     tailwindcss(),
     tsconfigPaths(),
